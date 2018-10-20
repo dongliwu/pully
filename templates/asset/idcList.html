@@ -1,0 +1,144 @@
+{% extends 'base/base.html' %}
+{% block content %}
+<div style="overflow:hidden;">
+  <div class="wapper-crumbs">
+    <ul class="crumbs">
+      <li><a href="{% url 'dashboard' %}"><span class="icon fa fa-home fa-size"> </span></a></li>
+      <li><a href="#"><span class="fa fa-server fa-size"> </span> 资产管理</a></li>
+      <li><a href="{% url 'idcList' %}"><span class="fa fa-server fa-size"> </span> 机房管理</a></li>
+    </ul>
+  </div>
+  <div class="wapper-body">
+    <div class="content">
+      <div class="layui-row">
+        <div class="layui-col-md4">
+          <a class="layui-btn layui-col-md2" href={% url 'idcAdd' %}>添加机房</a>
+          <button class="layui-btn layui-btn-danger layui-col-md2" data-type="choose_del">删除机房</button>
+        </div>
+        <div class="layui-col-md8">
+          <div class="layui-col-md3 layui-col-md-offset8">
+            <input id="search_content" class="layui-input " type="text" name="search" placeholder="机房名/主机名" autocomplete="off">
+          </div>
+		  <button id="search" class="layui-btn layui-col-md1" style="font-size:16px;">
+            <i class="layui-icon">&#xe615;</i> 搜索
+          </button>
+        </div>
+      </div>
+      <div class=" t-content">
+        <fieldset class="layui-elem-field">
+          <legend>机房列表</legend>
+          <div class="layui-field-box">
+		    <table id="table" class="layui-table" lay-filter="table"></table>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+  </div> 
+</div>  
+
+<script>
+
+layui.use('table', function(){
+  var table = layui.table;
+  
+  // 数据表格加载
+  table.render({
+    elem:'#table'
+    ,id:'table_data'
+    ,height:'full-347'
+    ,url:'{% url 'idc_list' %}'
+    ,page: true
+    ,limit: 14
+    ,cols:[[
+      {checkbox:true}
+      ,{field:'name', title:'机房名', width:200}
+      ,{field:'region', title:'区域', width:160}
+      ,{field:'provider', title:'供应商', width:280}
+      ,{field:'contacts__name', title:'联系人', width:140}
+      ,{field:'contacts__phone', title:'电话', width:160}
+      ,{field:'address', title:'地址', width:280}
+      ,{field:'contract__end_date', title:'到期时间', width:220, sort:true}
+      ,{title:'操作', width:180, align:'center', toolbar: '#toolBar'} 
+    ]]
+  });
+  
+  // 监听工具栏
+  table.on('tool(table)', function(obj){
+    var data = obj.data; 
+    var layEvent = obj.event; 
+    var tr = obj.tr;
+   
+    if(layEvent === 'detail'){
+      window.location.href="{% url 'idcDetail' %}";
+    } else if(layEvent === 'del'){ 
+      layer.confirm('确定删除吗？',{icon:5, title: ['删除', 'font-size:20px;'],skin:'layui-layer-molv'}, function(index){
+        obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+        layer.close(index);
+        //向服务端发送删除指令
+        $.ajax({
+          type:"DELETE"
+    	  ,url:"{% url 'idc' %}"
+    	  ,data:{'id':data.id}
+    	  ,dataType:'json'
+    	  ,success: function(){
+    	  	layer.msg('删除成功！', {time:2000});
+    	  }
+		});
+      });
+    } else if(layEvent === 'edit'){ 
+      window.location.href="{% url 'idcAdd' %}";
+    }
+  });
+ 
+  var $ = layui.$, active = {
+    choose_del: function(){
+      var ids = [];
+      // 获取全选按钮的数据
+	  var checkStatus = table.checkStatus('table_data')
+	  ,data = checkStatus.data;
+	  for (var i in data){
+        ids.push(data[i].id);
+      };
+      if (data === undefined || data.length == 0) {
+        layer.msg('没有选择任何数据，无法删除！', {time:2000});
+	  } else {
+        layer.confirm('确定删除吗？',{icon:5, title: ['删除', 'font-size:20px;'],skin:'layui-layer-molv'}, function(index){
+          // 提交数组到api去删除
+          layer.close(index);
+          $.ajax({
+            type:"DELETE"
+           ,url:"{% url 'idc' %}"
+           ,data:{'ids':ids}
+           ,dataType:'json'
+           ,success: function(){
+           	  layer.msg('删除成功！', {time:2000});
+           	  table.reload('table_data',{}); 
+           }
+	     });
+	   });
+	  };
+    }
+  };
+    
+  // 搜索
+  var $ = layui.jquery;
+  $("#search").click(function(){
+	var search_content = $("#search_content").val();
+	table.reload('table_data',{
+	  // 设置搜索的接口参数
+	  where: {
+	  	search:search_content
+	  }
+	  ,page: {
+	    curr: 1 // 从第一页开始
+	  }
+	}); 
+  });
+  $('.layui-btn').on('click', function(){
+    var type = $(this).data('type');
+    active[type] ? active[type].call(this) : '';
+  });
+});
+</script>
+
+{% endblock %}

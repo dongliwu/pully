@@ -1,0 +1,258 @@
+body{
+  font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;
+  font-size:18px;
+}
+
+@nav-color		: #008080;
+@normal-color	: #009688;
+@blue			: #3498db;
+@blue-darken	: #2980b9;
+@green			: #1abc9c;
+@green-darken	: #16a085;
+@LightCyan		: #E0FFFF;
+@Azure			: #F0FFFF;
+	
+.login{
+	&-center-box{
+		position:absolute;
+		height:350px;
+		width:400px;
+		left:50%;
+		top:50%;
+		margin-left:-250px;
+		margin-top:-200px;
+		z-index:100;
+		border:2px solid;
+		border-radius:15px;
+		background-color:#FFFFFF;
+		overflow:hidden;
+	}
+	&-header{
+		height:70px;
+		background-color:#008080;
+	}
+	&-header-content{
+		position:relative;
+		margin-left:20px;
+		padding-top:20px;
+		font-size:30px;
+	}
+	&-input{
+		position:relative;
+		height:45px;
+		width:350px;
+		margin-left:25px;
+		margin-top:25px;
+	}
+	&-forget-passwd{
+		position:relative;
+		height:40px;
+		width:10px;
+		left:25px;
+	}
+	&-btn{
+		position:relative;
+		height:40px;
+		width:125px;
+		left:155px;
+		margin-top:10px;
+	}
+	&-msg{
+		position:relative;
+		height:20px;
+		top:15px;
+		color:red;
+		font-size:20px;
+		text-align:center;
+	}
+}
+
+.layui-layout-body{
+	.layui-header{
+		background-color:@nav-color;
+	}
+	.layui-logo{
+		color:#FFFFFF;
+		font-size:20px;
+	}
+	.layui-nav{
+		background-color:@normal-color;
+	}
+	.layui-icon{
+		font-size:20px;
+	}
+	.layui-nav-item{
+	  a{
+	    font-size:16px;
+	  }
+	}
+	.layui-nav-bar{
+	  background-color:#5FB878;
+	}
+	.layui-side{
+	  width:180px;
+	}
+	.layui-side-scroll{
+	  width:200px;
+	}
+	.layui-nav-tree{
+	  width:175px;
+	}
+	.layui-body{
+	  left:180px;
+	}
+	.layui-footer{
+	  left:180px;
+	}
+}
+
+.fa-size {
+	font-size:16px;
+}
+
+.crumbs{
+  margin-top:10px;
+  margin-left:10px;
+  list-style:none;
+  display: inline-block;
+  font-size:16px;
+  .icon{
+  	margin-top:10px;
+  	margin-left:6px;
+  	font-size:20px;
+  }
+  
+  li{
+    float:left;
+    a{
+      color:#FFF;
+      display:block;
+      background: @green;
+      text-decoration: none;
+      position:relative;
+      height: 40px;
+      line-height:40px;
+      padding: 0 10px 0 5px;
+      text-align: center;
+      margin-right: 23px;
+    }
+    &:nth-child(even){
+      a{
+        background-color: @green-darken;
+        
+        &:before{
+          border-color:@green-darken;
+          border-left-color:transparent;
+         }
+        &:after{
+          border-left-color:@green-darken;
+        }
+      }
+    }
+    &:first-child{
+      a{
+        padding-left:15px;
+        @include border-radius(4px 0 0 4px);
+        &:before{
+          border:none;
+         }
+      }
+    }
+    &:last-child{
+      a{
+        padding-right:15px;
+        @include border-radius(0 4px 4px 0);
+        &:after{
+          border:none;
+         }
+      }
+    }
+    
+    a{   
+      &:before,
+      &:after{
+        content: "";
+        position:absolute;
+        top: 0;
+        border:0 solid @green;
+        border-width:20px 10px;
+        width: 0;
+        height: 0;
+      }
+      &:before{
+        left:-20px;
+        border-left-color:transparent;
+      }
+      &:after{
+        left:100%;
+        border-color:transparent;
+        border-left-color:@green;
+      }
+      &:hover{
+        background-color: @blue;
+        
+        &:before{
+          border-color:@blue;
+          border-left-color:transparent;
+         }
+        &:after{
+          border-left-color:@blue;
+        }
+      }
+      &:active{
+        background-color: @blue-darken;
+        &:before{
+          border-color:@blue-darken;
+          border-left-color:transparent;
+         }
+        &:after{
+          border-left-color:@blue-darken;
+        }
+      }
+    }
+  }
+}
+
+.wapper-crumbs{
+  width:100%;
+  height:62px;
+  background-color:@LightCyan;
+}
+
+.wapper-body{
+  width:100%;
+  height:92%;
+  background-color:@Azure;
+  .layui-container{
+    padding:0 0px;
+  }
+}
+
+.content{
+  margin:10px;
+  width:98.5%;
+  list-style:none;
+  display: inline-block;
+}
+
+.t-content{
+  margin-top:12px;
+  width:100%;
+}
+
+.layui-table{
+  th{
+    text-align:center;
+  }
+  td{
+    text-align:center; 
+  }
+}
+
+
+
+
+
+
+
+

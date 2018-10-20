@@ -1,0 +1,17 @@
+{% extends 'base/base.html' %}
+{% block content %}
+<div style="overflow:hidden;">
+  <div class="wapper-crumbs">
+    <ul class="crumbs">
+      <li><a href="{% url 'dashboard' %}"><span class="icon fa fa-home fa-size"> </span></a></li>
+      <li><a href="#"><span class="fa fa-server fa-size"> </span> 资产管理</a></li>
+      <li><a href="{% url 'idcList' %}"><span class="fa fa-server fa-size"> </span> 机房管理</a></li>
+      <li><a href="{% url 'idcAdd' %}"><span class="fa fa-server fa-size"> </span> 机房管理</a></li>
+    </ul>
+  </div>
+  <div class="wapper-body">
+    <div class="content">
+    </div>
+  </div>
+</div>
+{% endblock %}

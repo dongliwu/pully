@@ -1,0 +1,18 @@
+<div class="layui-header">
+  <div class="layui-logo">Pully 运维系统</div>
+  <ul class="layui-nav layui-layout-right">
+    <li class="layui-nav-item"><a href="">控制台</a></li>
+    <li class="layui-nav-item"><a href="">工单</a></li>
+    <li class="layui-nav-item"><a href="">任务指派</a></li>
+    <li class="layui-nav-item">
+      <a href="javascript:;">
+        <!-- <img class="layui-nav-img" src="http://t.cn/RCzsdCq" >-->
+        { user }
+      </a>
+      <dl class="layui-nav-child">
+        <dd><a href="">个人信息</a></dd>
+        <dd><a href={% url 'logout' %}>退出登录</a></dd>
+      </dl>
+    </li>
+  </ul>
+</div>

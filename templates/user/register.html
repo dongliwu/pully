@@ -1,0 +1,14 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>注册</title>
+</head>
+<body>
+	<form action={% url 'register' %} method='POST'>{% csrf_token %}
+		<input type='text' name='username' lay-verify="title" placeholder='username' />
+		<input type='text' name='email' lay-verify="email" placeholder='email' />
+		<input type='password' name ='password' lay-verify="pass" placeholder='password'>
+		<input type='submit' value='提交' /> 
+	</form>
+</body>
+</html>
