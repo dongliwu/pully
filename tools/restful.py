@@ -18,6 +18,7 @@ def restful(request, get=None, post=None, put=None, delete=None):
     method = request.method
     response = []
 
+    print(method)
     if method == 'GET':
         if get is None:
             response['code'] = 20001
@@ -26,21 +27,21 @@ def restful(request, get=None, post=None, put=None, delete=None):
             response = get(request)
         return response
     elif method == 'POST':
-        if get is None:
+        if post is None:
             response['code'] = 20002
             response['msg'] = "Lack of necessary parameters"
         else:
             response = post(request)
         return response
     elif method == 'PUT':
-        if get is None:
+        if put is None:
             response['code'] = 20003
             response['msg'] = "Lack of necessary parameters"
         else:
             response = put(request)
         return response
     elif method == 'DELETE':
-        if get is None:
+        if delete is None:
             response['code'] = 20004
             response['msg'] = "Lack of necessary parameters"
         else:

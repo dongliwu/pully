@@ -11,7 +11,7 @@ from passet.api import idc as asset_api_idc
 
 # api url
 urlpatterns = [
-    url(r'^api/idc/', asset_api_idc.idc_list, name='idc_list'),
+    url(r'^api/idc/list', asset_api_idc.idc_list, name='idc_list'),
     url(r'^api/idc/', asset_api_idc.idc, name='idc'),
 ] 
 
