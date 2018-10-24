@@ -5,6 +5,7 @@
 # @Date  : 2018/10/19
 # @Email  : i@dongliwu.com
 
+
 class Page():
     '''
         Page: 用于分页
@@ -26,4 +27,3 @@ class Page():
             end: 获得结束数
         '''
         return self.page * self.limit
-

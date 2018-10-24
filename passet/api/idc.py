@@ -4,50 +4,55 @@
 # @Author: LiWu Dong
 # @Date  : 2018/10/19
 # @Email  : i@dongliwu.com
-##################################
 
 from __future__ import unicode_literals
-from django.http import QueryDict
 from passet.models import *  
 from django.http.response import JsonResponse
 from django.db.models import Q
-from tools import page, common, restful
+from tools import page, input, restful
 
 # 获取所有IDC信息
 def idc_list(request):
-    '''
-        get idc list
-    '''
     response = {}
     response['code'] = 0
     response['msg'] = ""
-    search = request.GET.get('search', None)
-    page_num = common.verify_int(request.GET.get('page', 1), 1)
-    limit = common.verify_int(request.GET.get('limit', 14), 14)
+    search = input.getData(request, 'search', None)
+    page_num = int(input.getData(request, 'page', 1))
+    limit = int(input.getData(request, 'limit', 20))
     
     pageX = page.Page(page_num, limit)
     start = pageX.start
     end = pageX.end
     
     if search:
-        querySet = IDC.objects.filter(Q(name__contains=search) | Q(provider__contains=search)).values('id', 'name', 'region', 'provider', 'address', 'contacts__name', 'contacts__phone', 'contracts__end_date')[start:end]
+        querySet = IDC.objects.filter(Q(name__contains=search) | Q(provider__contains=search) | Q(contacts__name__contains=search)).values('id', 'name', 'region', 'provider', 'address', 'contacts__name', 'contacts__phone', 'contracts__end_date')[start:end]
         response['count'] = querySet.count()
     else:
         querySet = IDC.objects.values('id', 'name', 'region', 'provider', 'address', 'contacts__name', 'contacts__phone', 'contracts__end_date')[start:end]
         response['count'] = IDC.objects.count()
     response['msg'] = "success"
     response['data'] = list(querySet)
-    for item in range(len(response['data'])):
-        response['data'][item]['contracts__end_date'] = str(response['data'][item]['contracts__end_date'])
     return JsonResponse(response)
 
-#
+# 获取具体IDC详细信息
 def idc_detail(request):
     response = {}
     response['code'] = 0
     response['msg'] = ""
+
+    id = input.getData(request, 'id', None)
+    if id:
+        querySet = IDC.objects.filter(id=id).values('name', 'region', 'provider', 'address', 'create_at', 'update_at', 'contacts__name', 'contacts__phone', 'contacts__email', 'contracts__sn', 'contracts__company', 'contracts__staff', 'contracts__phone', 'contracts__title', 'contracts__cost', 'contracts__start_date', 'contracts__end_date', 'contracts__abstract', 'contracts__file_name', 'contracts__file_path')
+        response['msg'] = "success"
+        response['data'] = list(querySet)
+    else:
+        response['code'] = 1001
+        response['msg'] = "missing parameters"
+
     return response
 
+
+# 添加IDC
 def idc_add(request):
     # TODO: make sure value is not None
     response = {}
@@ -92,6 +97,7 @@ def idc_add(request):
 
     return response
 
+# 更新IDC
 def idc_update(request):
     response = {}
     response['code'] = 0
@@ -116,7 +122,7 @@ def idc_del(request):
         response['msg'] = "success"
     else:
         response['code'] = 1002
-        response['msg'] = "missing parameter"
+        response['msg'] = "missing parameters"
     return response
 
 

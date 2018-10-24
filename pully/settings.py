@@ -37,14 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-#     'rest_framework',
     'puser',
     'passet',
 ]
-
-# REST_FRAMEWORK = {
-#     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-#     'PAGE_SIZE': 15}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -85,12 +80,12 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'pully',
         'HOST': '127.0.0.1',
-        'USER': 'root',
-        'PASSWORD': 'xiaowu',
+        'USER': 'pully',
+        'PASSWORD': 'pully',
         'PORT': '3306',
-        'OPTIONS': {
-                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-            }
+        #'OPTIONS': {
+        #        'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        #    }
     }
 }
 
